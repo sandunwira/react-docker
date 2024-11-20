@@ -1,0 +1,17 @@
+services:
+  web:
+    image: node:22
+    volumes:
+      - ./app:/usr/src/app
+    ports:
+      - "3000:3000"
+    command: sh -c "chmod +x /usr/src/app/startup.sh && /usr/src/app/startup.sh"
+    develop:
+      watch:
+        - action: sync
+          path: ./app
+          target: /src/app
+          ignore:
+            - node_modules/
+        - action: rebuild
+          path: package.json
